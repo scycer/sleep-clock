@@ -20,7 +20,7 @@ function App () {
 
   const backgroundColor =
     time.getHours() >= sunrise && time.getHours() < sunset
-      ? '#FFA500'
+      ? '#EF6C00'
       : '#0000FF'
 
   useEffect(() => {
