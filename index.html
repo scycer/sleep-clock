@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Day and Night Clock</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: white;
+        text-align: center;
+        padding-top: 20%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="clock"></div>
+
+    <script>
+      function updateClock() {
+        var now = new Date()
+        var hours = now.getHours()
+        var minutes = now.getMinutes()
+        var seconds = now.getSeconds()
+        // Format the time in a 24-hour format HH:MM:SS
+        var timeString = [hours, minutes, seconds]
+          .map(function (part) {
+            return part < 10 ? '0' + part : part
+          })
+          .join(':')
+
+        // Set the clock's text to the formatted time string
+        document.getElementById('clock').textContent = timeString
+
+        // Determine whether it's day or night based on the hour
+        if (hours >= 6 && hours < 18) {
+          // Daytime: set background color to orange
+          document.body.style.backgroundColor = '#FFA500'
+        } else {
+          // Nighttime: set background color to blue
+          document.body.style.backgroundColor = '#0000FF'
+        }
+      }
+
+      // Update the clock now and every second thereafter
+      updateClock()
+      setInterval(updateClock, 1000)
+    </script>
+  </body>
+</html>
