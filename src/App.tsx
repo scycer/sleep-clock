@@ -3,7 +3,7 @@ import './App.css'
 
 function App () {
   const [time, setTime] = useState(new Date())
-  const [isFullscreen, setIsFullscreen] = useState(false)
+  // const [isFullscreen, setIsFullscreen] = useState(false)
 
   useEffect(() => {
     const updateClock = () => {
@@ -15,8 +15,8 @@ function App () {
     return () => clearInterval(intervalId)
   }, [])
 
-  const [sunrise, setSunrise] = useState(6)
-  const [sunset, setSunset] = useState(18)
+  const [sunrise, _] = useState(6)
+  const [sunset, __] = useState(18)
 
   const backgroundColor =
     time.getHours() >= sunrise && time.getHours() < sunset
@@ -33,10 +33,10 @@ function App () {
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(e => console.log(e))
-      setIsFullscreen(true)
+      // setIsFullscreen(true)
     } else if (document.exitFullscreen) {
       document.exitFullscreen()
-      setIsFullscreen(false)
+      // setIsFullscreen(false)
     }
   }
 
