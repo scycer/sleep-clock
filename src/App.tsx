@@ -2,37 +2,47 @@ import { useEffect, useState } from 'react'
 import './App.css'
 
 function App () {
-  // State to hold the current time
   const [time, setTime] = useState(new Date())
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   useEffect(() => {
-    // Function to update the current time
     const updateClock = () => {
       setTime(new Date())
     }
 
-    // Update the clock every second
     const intervalId = setInterval(updateClock, 1000)
 
-    // Cleanup interval on component unmount
     return () => clearInterval(intervalId)
   }, [])
 
-  // Determine the background color based on the current hour
-  const backgroundColor =
-    time.getHours() >= 6 && time.getHours() < 18 ? '#FFA500' : '#0000FF'
+  const [sunrise, setSunrise] = useState(6)
+  const [sunset, setSunset] = useState(18)
 
-  // Apply the background color to the body element
+  const backgroundColor =
+    time.getHours() >= sunrise && time.getHours() < sunset
+      ? '#FFA500'
+      : '#0000FF'
+
   useEffect(() => {
     document.body.style.backgroundColor = backgroundColor
   }, [backgroundColor])
 
-  // Format the time to a 24-hour HH:MM:SS string
-  const formattedTime = time.toLocaleTimeString('en-US', { hour12: false })
+  const formattedTime = `${time.getHours()}:${time.getMinutes()}`
+
+  // Toggle fullscreen mode
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(e => console.log(e))
+      setIsFullscreen(true)
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen()
+      setIsFullscreen(false)
+    }
+  }
 
   return (
-    <div className='clock-container'>
-      <h1>{formattedTime}</h1>
+    <div className='clock-container' onClick={toggleFullscreen}>
+      <h1 className='clock'>{formattedTime}</h1>
     </div>
   )
 }
