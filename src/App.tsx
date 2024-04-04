@@ -15,7 +15,7 @@ function App () {
     return () => clearInterval(intervalId)
   }, [])
 
-  const [sunrise, _] = useState(6)
+  const [sunrise, _] = useState(7)
   const [sunset, __] = useState(18)
 
   const backgroundColor =
@@ -27,7 +27,10 @@ function App () {
     document.body.style.backgroundColor = backgroundColor
   }, [backgroundColor])
 
-  const formattedTime = `${time.getHours()}:${time.getMinutes()}`
+  const formattedTime = `${time.getHours()}:${time
+    .getMinutes()
+    .toString()
+    .padStart(2, '0')}`
 
   // Toggle fullscreen mode
   const toggleFullscreen = () => {

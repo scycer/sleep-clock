@@ -1,23 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
+import App from './App'
 import './index.css'
+import { registerSW } from 'virtual:pwa-register'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+// add this to prompt for a refresh
+const updateSW = registerSW({
+  onNeedRefresh () {
+    if (confirm('New content available. Reload?')) {
+      updateSW(true)
+    }
+  }
+})
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 )
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/service-worker.ts')
-      .then(registration => {
-        console.log('SW registered:', registration)
-      })
-      .catch(registrationError => {
-        console.log('SW registration failed:', registrationError)
-      })
-  })
-}
